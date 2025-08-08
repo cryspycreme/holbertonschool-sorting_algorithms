@@ -3,9 +3,9 @@
 #include "sort.h"
 
 /**
-* insertion_sort - sorts an array of integers in ascending order using insertion sort
+* selection_sort - sorts an array of integers in ascending order
 *
-* @list: pointer to a pointer named list which contains a node
+* @array: pointer to the array to be sorted.
 * @size: size of the array
 * Return: nothing.
 */
@@ -21,7 +21,7 @@ void selection_sort(int *array, size_t size)
 	{
 		j = i + 1;
 		min_idx = i;
-		
+
 		/*this loops through the array to find the index of smallest no.*/
 		while (j < size)
 		{
@@ -35,7 +35,7 @@ void selection_sort(int *array, size_t size)
 		{
 			temp = array[i];
 			array[i] = array[min_idx];
-    			array[min_idx] = temp;
+			array[min_idx] = temp;
 			print_array(array, size);
 		}
 		i++;
