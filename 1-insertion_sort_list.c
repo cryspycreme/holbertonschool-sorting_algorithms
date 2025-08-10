@@ -1,62 +1,52 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "sort.h"
+/**
+ *swap_node - swap a node for his previous one
+ *@node: node
+ *@list: node list
+ *Return: return a pointer to a node which was enter it
+ */
+listint_t *swap_node(listint_t *node, listint_t **list)
+{
+        listint_t *back = node->prev, *current = node;
+        /*NULL, 19, 48, 9, 71, 13, NULL*/
+
+        back->next = current->next;
+        if (current->next)
+                current->next->prev = back;
+        current->next = back;
+        current->prev = back->prev;
+        back->prev = current;
+        if (current->prev)
+                current->prev->next = current;
+        else
+                *list = current;
+        return (current);
+}
 
 /**
-* insertion_sort - sorts an array of integers in ascending order using insertion sort
-*
-* @list: pointer to a pointer named list which contains a node
-* @size: size of the array
-* Return: nothing.
-*/
-
+ * insertion_sort_list - function that sorts a doubly linked list
+ * of integers in ascending order using the Insertion sort algorithm
+ * @list: Doubly linked list to sort
+ */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *sorted = NULL;
-	listint_t *current = *list;
+	listint_t *node;
 
-	if (*list == NULL)
-                return;
-
-	/*Traverse the list to sort each element*/
-	while (current != NULL)
+	/* If the list itself is NULL or has only one element, no sorting is needed, so it returns immediately.*/
+	if (list == NULL || (*list)->next == NULL)
+		return;
+	
+	/*Start with the second node in the list because in insertion sort, we treat the first node as already "sorted."*/
+	node = (*list)->next;
+	while (node) /*loop until end of list*/
 	{
-		(*list)->next = current->next;
-
-		if (sorted == NULL || sorted->n == current->n)
+		while ((node->prev) && (node->prev->n > node->n))
 		{
-			current->next = sorted;
+			node = swap_node(node, list);
+			print_list(*list);
 		}
-
-		if (sorted != NULL)
-			sorted->prev = current;
-
-		sorted = current;
-		sorted->prev = NULL;
-
-		 else {
-
-            /*Pointer to traverse the sorted part*/
-             listint_t *current_sorted = sorted;
-
-            /*Find the correct position to insert*/
-            while (current_sorted->next != NULL &&
-                   current_sorted->next->n < current->n) {
-                current_sorted = current_sorted->next;
-            }
-
-            /*Insert `curr` after `current_sorted`*/
-            current->next = current_sorted->next;
-
-            if (current_sorted->next != NULL)
-                current_sorted->next->prev = current;
-
-            current_sorted->next = current;
-            current->prev = current_sorted;
-        }
-
-        current = next;
-    }
-
-    return sorted;
+		node = node->next;
+	}
 }
