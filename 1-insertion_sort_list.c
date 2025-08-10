@@ -9,20 +9,20 @@
  */
 listint_t *swap_node(listint_t *node, listint_t **list)
 {
-        listint_t *back = node->prev, *current = node;
-        /*NULL, 19, 48, 9, 71, 13, NULL*/
+	listint_t *back = node->prev, *current = node;
+	/*NULL, 19, 48, 9, 71, 13, NULL*/
 
-        back->next = current->next;
-        if (current->next)
-                current->next->prev = back;
-        current->next = back;
-        current->prev = back->prev;
-        back->prev = current;
-        if (current->prev)
-                current->prev->next = current;
-        else
-                *list = current;
-        return (current);
+	back->next = current->next;
+	if (current->next)
+		current->next->prev = back;
+	current->next = back;
+	current->prev = back->prev;
+	back->prev = current;
+	if (current->prev)
+		current->prev->next = current;
+	else
+		*list = current;
+	return (current);
 }
 
 /**
@@ -34,11 +34,11 @@ void insertion_sort_list(listint_t **list)
 {
 	listint_t *node;
 
-	/* If the list itself is NULL or has only one element, no sorting is needed, so it returns immediately.*/
+	/* If the list itself is NULL /has only one element, no sorting is needed*/
 	if (list == NULL || (*list)->next == NULL)
 		return;
-	
-	/*Start with the second node in the list because in insertion sort, we treat the first node as already "sorted."*/
+
+	/*Start with the second node in list as the 1st is already "sorted."*/
 	node = (*list)->next;
 	while (node) /*loop until end of list*/
 	{
